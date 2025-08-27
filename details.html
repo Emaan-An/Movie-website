@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Movie Details</title>
+  <!-- <style>
+    body {
+            background-color: #0f1624;
+      text-align: center;
+      font-family: Arial, sans-serif;
+      color: white;
+    }
+    img {
+      width: 300px;
+      border-radius: 10px;
+      margin-top: 20px;
+    }
+    .trailer-button {
+      padding: 10px 20px;
+      margin-top: 20px;
+      background-color: #ff3333;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    .trailer-button:hover {
+      background-color: #cc0000;
+    }
+    /* Animation Keyframes */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideUp {
+  from { transform: translateY(20px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+@keyframes zoomIn {
+  from { transform: scale(0.8); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+
+@keyframes pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+  100% { transform: scale(1); }
+}
+
+/* Apply Animations */
+body {
+  animation: fadeIn 1s ease-in;
+}
+
+#movie-title {
+  animation: slideUp 1s ease-in-out;
+}
+
+#movie-desc, #movie-quality {
+  animation: slideUp 1.2s ease-in-out;
+}
+
+img#movie-img {
+  animation: zoomIn 1s ease-out;
+  transition: transform 0.3s ease;
+}
+
+img#movie-img:hover {
+  transform: scale(1.05);
+}
+
+.trailer-button {
+  animation: fadeIn 1.5s ease-in-out;
+  transition: transform 0.3s ease-in-out;
+}
+
+.trailer-button:hover {
+  animation: pulse 0.6s ease-in-out;
+}
+.movie-card {
+  max-width: 350px; /* Laptop ke liye limit */
+  width: 90%;       /* Mobile pr screen ke hisaab se adjust ho jaye */
+  margin: 20px auto;
+  text-align: center;
+}
+
+.movie-card img {
+  width: 100%;   /* Image ko card ke andar pura fit kar do */
+  height: auto;
+  border-radius: 10px;
+}
+
+
+  </style> -->
+<style>
+  body {
+  background-color: #0f1624;
+  text-align: center;
+  font-family: Arial, sans-serif;
+  color: white;
+  animation: fadeIn 1s ease-in;
+}
+
+/* Movie Card Container */
+.movie-card {
+  max-width: 800px;   /* Laptop par limit */
+  width: 95%;         /* Mobile pr full */
+  margin: 30px auto;
+  padding: 20px;
+  border-radius: 15px;
+  background: rgba(255, 255, 255, 0.05); /* halka sa glass effect */
+  box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+  text-align: center;
+}
+
+/* Title */
+#movie-title {
+  font-size: 2rem;
+  margin-bottom: 15px;
+  animation: slideUp 1s ease-in-out;
+}
+
+/* Image */
+.movie-card img {
+  width: 100%;        /* Responsive full width */
+  max-width: 600px;   /* Laptop pr itna se zyada na ho */
+  height: auto;
+  border-radius: 12px;
+  margin-top: 20px;
+  animation: zoomIn 1s ease-out;
+  transition: transform 0.3s ease;
+}
+
+.movie-card img:hover {
+  transform: scale(1.05);
+}
+
+/* Description + Quality */
+#movie-desc, #movie-quality {
+  font-size: 1.1rem;
+  margin: 15px 0;
+  line-height: 1.5;
+  color: #ddd;
+  animation: slideUp 1.2s ease-in-out;
+}
+
+/* Trailer Button */
+.trailer-button {
+  padding: 12px 25px;
+  margin-top: 20px;
+  background-color: #ff3333;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 1rem;
+  animation: fadeIn 1.5s ease-in-out;
+  transition: transform 0.3s ease-in-out, background 0.3s ease;
+}
+
+.trailer-button:hover {
+  background-color: #cc0000;
+  animation: pulse 0.6s ease-in-out;
+}
+
+/* Responsive Fix */
+@media (max-width: 768px) {
+  #movie-title {
+    font-size: 1.5rem;
+  }
+  #movie-desc, #movie-quality {
+    font-size: 1rem;
+  }
+  .trailer-button {
+    width: 100%;  /* Mobile pr button full width */
+  }
+}
+</style>
+</head>
+<body>
+  <!-- <h1 id="movie-title">Loading...</h1>
+  <img id="movie-img" src="" alt="">
+  <p id="movie-desc"></p>
+  <p id="movie-quality"></p>
+<a id="trailer-link" target="_blank">
+    <button class="trailer-button">🎬 Watch Trailer</button>
+  </a> -->
+  <div class="movie-card">
+  <h1 id="movie-title">Loading...</h1>
+  <img id="movie-img" src="" alt="">
+  <p id="movie-desc"></p>
+  <p id="movie-quality"></p>
+  <a id="trailer-link" target="_blank">
+    <button class="trailer-button">🎬 Watch Trailer</button>
+  </a>
+</div>
+  <script>
+    const movieId = localStorage.getItem("selectedMovie");
+
+    const movies = {
+      endgame: {
+        title: "Avengers: Endgame",
+        img: "../endgame.jpeg",
+        description: "Avengers unite to reverse the damage caused by Thanos.",
+        quality: "Available in 480p, 720p, 1080p",
+        trailer: "https://www.youtube.com/watch?v=TcMBFSGVi1c"
+      },
+      underground: {
+        title: "Underground Full Movie",
+        img: "../underground.jpeg",
+        description: "Action-packed thriller with underground fighters.",
+        quality: "Available in 480p, 720p, 1080p",
+        trailer: "https://www.youtube.com/watch?v=rOh8ANPkXa4"
+      },
+      dead: {
+        title: "All of Us Are Dead",
+        img: "../dead.jpeg",
+        description: "Action-packed thriller with underground fighters.",
+        quality: "Available in 480p, 720p, 1080p",
+        trailer: "https://www.youtube.com/watch?v=IN5TD4VRcSM"
+      },
+      uncharted: {
+        title: "Uncharted Full Movie",
+        img: "../uncharted.jpeg",
+        description: "Action-packed thriller with underground fighters.",
+        quality: "Available in 480p, 720p, 1080p",
+        trailer: "https://www.youtube.com/watch?v=eHp3MbsCbMg"
+
+      },
+      madness: {
+        title: "Doctor Strange in the Multiverse of Madeness Full Movie",
+        img: "../madness.jpeg",
+        description: "Action-packed thriller with underground fighters.",
+        quality: "Available in 480p, 720p, 1080p",
+        trailer: "https://www.youtube.com/watch?v=Rt_UqUm38BI"
+
+      },
+      xman: {
+        title: "X-Men Full Movie",
+        img: "../x-man.jpeg",
+        description: "Action-packed thriller with underground fighters.",
+        quality: "Available in 480p, 720p, 1080p",
+        trailer: "https://www.youtube.com/watch?v=qq96fOkxKJU"
+
+      },
+      money: {
+        title: "Money Heist Season 5",
+        img: "../money.jpeg",
+        description: "Action-packed thriller with underground fighters.",
+        quality: "Available in 480p, 720p, 1080p",
+        trailer: "https://www.youtube.com/watch?v=2ncLy2tHEwg"
+      },
+      ms: {
+        title: "Ms MArvel Season 1",
+        img: "../ms.jpeg",
+        description: "Action-packed thriller with underground fighters.",
+        quality: "Available in 480p, 720p, 1080p",
+        trailer: "https://www.youtube.com/watch?v=m9EX0f6V11Y"
+      },
+      red: {
+        title: "Red Notice Full Movie",
+        img: "../red.jpeg",
+        description: "Action-packed thriller with underground fighters.",
+        quality: "Available in 480p, 720p, 1080p",
+        trailer: "https://www.youtube.com/watch?v=Pj0wz7zu3Ms"
+      },
+      sandman: {
+        title: "Sandman Season 1",
+        img: "../sandman.jpeg",
+        description: "Action-packed thriller with underground fighters.",
+        quality: "Available in 480p, 720p, 1080p",
+        trailer: "https://www.youtube.com/watch?v=ZJXamnPUm0I"
+      },
+      spiderman: {
+        title: "Spiderman No Way Hone",
+        img: "../spiderman.jpeg",
+        description: "Action-packed thriller with underground fighters.",
+        quality: "Available in 480p, 720p, 1080p",
+        trailer: "https://www.youtube.com/watch?v=JfVOs4VSpmA"
+      },
+      squid: {
+        title: "squid Game Season 1",
+        img: "../squid.jpeg",
+        description: "Action-packed thriller with underground fighters.",
+        quality: "Available in 480p, 720p, 1080p",
+        trailer: "https://www.youtube.com/watch?v=oqxAJKy0ii4"
+      },
+      // Add more movies here
+    };
+
+    const movie = movies[movieId];
+
+    if (movie) {
+      document.getElementById("movie-title").textContent = movie.title;
+      document.getElementById("movie-img").src = movie.img;
+      document.getElementById("movie-img").alt = movie.title;
+      document.getElementById("movie-desc").textContent = movie.description;
+      document.getElementById("movie-quality").textContent = movie.quality;
+      document.getElementById("trailer-link").href = movie.trailer;
+
+    } else {
+      document.getElementById("movie-title").textContent = "Movie not found.";
+    }
+  </script>
+ 
+
+</body>
+</html>
